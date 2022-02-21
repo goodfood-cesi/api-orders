@@ -13,6 +13,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->post('init', 'PaymentController@init');
+$router->post('capture', 'PaymentController@capture');
+
+$router->get('orders',  ['as' => 'orders.index', 'uses' => 'OrderController@index']);
+$router->get('orders/{id}',  ['as' => 'orders.show', 'uses' => 'OrderController@show']);
