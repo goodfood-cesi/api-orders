@@ -99,7 +99,7 @@ class PaymentController extends Controller {
             foreach ($products as $product) {
                 $row = new OrderRow([
                     'product_id' => $product['id'],
-                    'amount_untaxed' => $product['price'],
+                    'amount_untaxed' => $product['amount'],
                     'product_quantity' => $product['quantity']
                 ]);
                 $order->rows()->save($row);
