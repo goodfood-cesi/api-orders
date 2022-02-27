@@ -14,8 +14,8 @@ class OrderResource extends JsonResource{
             'products' => $products = $this->products,
             'menus' => $menus = $this->menus,
             'restaurant_id' => $this->restaurant_id,
-            'created_at' => date_format($this->created_at,"Y/m/d"),
-            'updated_at' => date_format($this->updated_at,"Y/m/d"),
+            'created_at' => date_format($this->created_at,"Y/m/d H:i"),
+            'updated_at' => date_format($this->updated_at,"Y/m/d H:i"),
         ];
         $total = 0;
 
