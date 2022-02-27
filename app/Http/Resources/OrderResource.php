@@ -12,7 +12,7 @@ class OrderResource extends JsonResource{
             'status' => $this->status,
             'paid' => $this->paid,
             'products' => $products = $this->rows,
-            'shop_id' => $this->shop_id,
+            'restaurant_id' => $this->restaurant_id,
             'created_at' => date_format($this->created_at,"Y/m/d"),
             'updated_at' => date_format($this->updated_at,"Y/m/d"),
         ];
