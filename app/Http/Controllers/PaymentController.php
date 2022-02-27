@@ -25,7 +25,11 @@ class PaymentController extends Controller {
             $grandTotal = 0;
             $grandTotalTax = 0;
             foreach ($request->input('cart') as $item) {
-                $product = $this->fetch('/restaurants/'. $request->input('restaurant') .'/products/' . $item['id']);
+                if($item['type'] === 'menu') {
+                    $product = $this->fetch('/restaurants/'. $request->input('restaurant') .'/menus/' . $item['id']);
+                } else {
+                    $product = $this->fetch('/restaurants/'. $request->input('restaurant') .'/products/' . $item['id']);
+                }
                 if (!$product['meta']['success']) throw new Exception('Cannot find this product', 404);
 
                 if ($item['quantity'] <= 0) continue;
