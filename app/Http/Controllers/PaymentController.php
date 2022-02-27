@@ -36,7 +36,7 @@ class PaymentController extends Controller {
                 $product['data']['quantity'] = (int)$item['quantity'];
                 $products[] = $product['data'];
                 $grandTotal += $product['data']['amount'] * $product['data']['quantity'];
-                $grandTotalTax += $product['data']['amount'] * $product['data']['quantity'] * 0.2;
+                $grandTotalTax += $product['data']['amount'] * $product['data']['quantity'] * 0.1;
             }
 
             $paypalRequest = new OrdersCreateRequest();
