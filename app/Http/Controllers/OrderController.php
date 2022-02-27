@@ -7,9 +7,8 @@ use App\Models\Order;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller;
 
-class OrderController extends  Controller {
+class OrderController extends Controller {
     public function index(Request $request): JsonResponse {
         return $this->success(OrderResource::collection(Order::where('user_id', $request->input('token')->sub)->where('paid', true)->latest()->get()), 'Orders loaded');
     }
