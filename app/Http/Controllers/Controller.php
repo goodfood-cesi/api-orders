@@ -33,6 +33,11 @@ class Controller extends BaseController{
         if(!$response) {
             throw new Exception('Can\'t connect to RESTAURANT API');
         }
+
+        if(curl_getinfo($curl, CURLINFO_HTTP_CODE) !== 200) {
+            throw new Exception('RESTAURANT API returned error');
+        }
+
         return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
     }
 }
