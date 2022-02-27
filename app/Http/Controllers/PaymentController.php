@@ -19,8 +19,8 @@ class PaymentController extends Controller {
                 'restaurant' => 'required|int'
             ]);
 
-            $shop = $this->fetch('/restaurants/' . $request->input('restaurant'));
-            if (!$shop['meta']['success']) throw new Exception('Cannot find this restaurant', 404);
+            $restaurant = $this->fetch('/restaurants/' . $request->input('restaurant'));
+            if (!$restaurant['meta']['success']) throw new Exception('Cannot find this restaurant', 404);
             $products = [];
             $grandTotal = 0;
             $grandTotalTax = 0;
@@ -88,7 +88,7 @@ class PaymentController extends Controller {
             $order->user_id = $request->input('token')->sub;
             $order->paid = false;
             $order->status = 1;
-            $order->shop_id = $request->input('shop');
+            $order->restaurant_id = $request->input('restaurant');
             $order->paypal_id = $paypalResponse->result->id;
             $order->save();
 
