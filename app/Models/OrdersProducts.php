@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderRow extends Model {
+class OrdersProducts extends Model {
     use HasFactory;
 
-    protected $table = 'orders_rows';
+    protected $table = 'orders_products';
 
     protected $fillable = [
         'order_id',
         'product_id',
         'amount_untaxed',
-        'product_quantity'
+        'quantity'
     ];
 
     public function order(): BelongsTo {

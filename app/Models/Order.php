@@ -19,7 +19,11 @@ class Order extends Model {
         'shop_id'
     ];
 
-    public function rows(): HasMany {
-        return $this->hasMany(OrderRow::class);
+    public function menus(): HasMany {
+        return $this->hasMany(OrdersMenus::class);
+    }
+
+    public function products(): HasMany {
+        return $this->hasMany(OrdersProducts::class);
     }
 }
