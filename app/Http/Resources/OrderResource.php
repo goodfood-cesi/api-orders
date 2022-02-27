@@ -11,7 +11,8 @@ class OrderResource extends JsonResource{
             'user_id' => $this->user_id,
             'status' => $this->status,
             'paid' => $this->paid,
-            'products' => $products = $this->rows,
+            'products' => $products = $this->products,
+            'menus' => $menus = $this->menus,
             'restaurant_id' => $this->restaurant_id,
             'created_at' => date_format($this->created_at,"Y/m/d"),
             'updated_at' => date_format($this->updated_at,"Y/m/d"),
@@ -19,7 +20,10 @@ class OrderResource extends JsonResource{
         $total = 0;
 
         foreach ($products as $product){
-            $total += $product->product_quantity*$product->amount_untaxed;
+            $total += $product->quantity * $product->amount_untaxed;
+        }
+        foreach ($menus as $menu){
+            $total += $menu->quantity * $menu->amount_untaxed;
         }
 
         $result['total_untaxed'] = round($total,2);
