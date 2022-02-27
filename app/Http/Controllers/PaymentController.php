@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Helpers\PaypalClient;
 use App\Models\Order;
-use App\Models\OrderRow;
+use App\Models\OrdersMenus;
+use App\Models\OrdersProducts;
 use Exception;
 use Illuminate\Http\Request;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
@@ -14,8 +15,9 @@ class PaymentController extends Controller {
 
     public function init(Request $request) {
         try {
+            // @todo validate cart array
             $this->validate($request, [
-                'cart' => 'required',
+                'cart' => 'required|array',
                 'restaurant' => 'required|int'
             ]);
 
@@ -34,6 +36,7 @@ class PaymentController extends Controller {
 
                 if ($item['quantity'] <= 0) continue;
                 $product['data']['quantity'] = (int)$item['quantity'];
+                $product['data']['type'] = $item['type'];
                 $products[] = $product['data'];
                 $grandTotal += $product['data']['amount'] * $product['data']['quantity'];
                 $grandTotalTax += $product['data']['amount'] * $product['data']['quantity'] * 0.1;
@@ -97,14 +100,22 @@ class PaymentController extends Controller {
             $order->save();
 
             foreach ($products as $product) {
-                $row = new OrderRow([
-                    'product_id' => $product['id'],
-                    'amount_untaxed' => $product['amount'],
-                    'product_quantity' => $product['quantity']
-                ]);
-                $order->rows()->save($row);
+                if($product['type'] === 'menu') {
+                    $row = new OrdersMenus([
+                        'menu_id' => $product['id'],
+                        'amount_untaxed' => $product['amount'],
+                        'quantity' => $product['quantity']
+                    ]);
+                    $order->menus()->save($row);
+                } else {
+                    $row = new OrdersProducts([
+                        'product_id' => $product['id'],
+                        'amount_untaxed' => $product['amount'],
+                        'quantity' => $product['quantity']
+                    ]);
+                    $order->products()->save($row);
+                }
             }
-
             return $this->success($paypalResponse, 'Payment initiated');
         } catch (Exception $e) {
             return $this->error($e->getMessage());
