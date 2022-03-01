@@ -39,7 +39,6 @@ class PaymentController extends Controller {
                 $product['data']['type'] = $item['type'];
                 $products[] = $product['data'];
                 $grandTotal += $product['data']['amount'] * $product['data']['quantity'];
-                $grandTotalTax += $product['data']['amount'] * $product['data']['quantity'] * 0.1;
             }
 
             $paypalRequest = new OrdersCreateRequest();
@@ -60,7 +59,7 @@ class PaymentController extends Controller {
                         'soft_descriptor' => 'HighFashions',
                         'amount' => [
                             'currency_code' => 'EUR',
-                            'value' => round($grandTotal + $grandTotalTax, 2),
+                            'value' => round($grandTotal, 2),
                             'breakdown' => [
                                 'item_total' => [
                                     'currency_code' => 'EUR',
@@ -72,7 +71,7 @@ class PaymentController extends Controller {
                                 ],
                                 'tax_total' => [
                                     'currency_code' => 'EUR',
-                                    'value' => round($grandTotalTax, 2),
+                                    'value' => '0.00',
                                 ]
                             ]
                         ],
