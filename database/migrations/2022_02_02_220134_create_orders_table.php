@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('status');
             $table->boolean('paid');
             $table->unsignedInteger('restaurant_id');
+            $table->string('restaurant_name');
             $table->timestamps();
         });
     }
