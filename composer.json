@@ -10,7 +10,7 @@
         "php": "^8.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "firebase/php-jwt": "^5.4",
+        "firebase/php-jwt": "^6.0",
         "laravel/lumen-framework": "^8.3.1",
         "paypal/paypal-checkout-sdk": "^1.0"
     },
