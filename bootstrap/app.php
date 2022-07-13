@@ -74,7 +74,7 @@ $app->configure('jwt');
 */
 
 $app->middleware([
-    App\Http\Middleware\AuthMiddleware::class
+    App\Http\Middleware\Authenticate::class
 ]);
 
 $app->routeMiddleware([
