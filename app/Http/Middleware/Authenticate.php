@@ -26,6 +26,6 @@ class Authenticate extends BaseMiddleware
         } catch (UnauthorizedHttpException $e) {
             return $this->error('Unauthorized', $e->getMessage(), 401);
         }
-        return $next($request);
+        return $next($request->merge(['token' => $this->auth->getPayload()->getClaims()]));
     }
 }
