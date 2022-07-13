@@ -91,7 +91,7 @@ class PaymentController extends Controller {
             $client = PaypalClient::client();
             $paypalResponse = $client->execute($paypalRequest);
             $order = new Order();
-            $order->user_id = $request->input('token')->sub;
+            $order->user_id = $request->token->get('sub');
             $order->paid = false;
             $order->status = 1;
             $order->restaurant_id = $request->input('restaurant');
