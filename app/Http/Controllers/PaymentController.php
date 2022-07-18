@@ -140,7 +140,7 @@ class PaymentController extends Controller {
 
             Mail::to($order->user->email)->send(new OrderConfirmed($order->user, $order));
 
-            return $this->success($paypalResponse, 'Payment captured and order created');
+            return $this->success($paypalResponse, 'Payment captured and order created', 201);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
