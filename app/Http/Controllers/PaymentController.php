@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\PaypalClient;
+use App\Mails\OrderConfirmed;
 use App\Models\Order;
 use App\Models\OrdersMenus;
 use App\Models\OrdersProducts;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 
@@ -15,7 +17,6 @@ class PaymentController extends Controller {
 
     public function init(Request $request) {
         try {
-            // @todo validate cart array
             $this->validate($request, [
                 'cart' => 'required|array',
                 'restaurant' => 'required|int'
@@ -91,7 +92,7 @@ class PaymentController extends Controller {
             $client = PaypalClient::client();
             $paypalResponse = $client->execute($paypalRequest);
             $order = new Order();
-            $order->user_id = $request->token->get('sub');
+            $order->user_id = $request->token->get('sub')->getValue();
             $order->paid = false;
             $order->status = 1;
             $order->restaurant_id = $request->input('restaurant');
@@ -136,6 +137,9 @@ class PaymentController extends Controller {
             $order->paid = true;
             $order->status = 2;
             $order->save();
+
+            Mail::to($order->user->email)->send(new OrderConfirmed($order->user, $order));
+
             return $this->success($paypalResponse, 'Payment captured and order created');
         } catch (Exception $e) {
             return $this->error($e->getMessage());
