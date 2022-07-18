@@ -40,7 +40,7 @@ JWT_SECRET=<generated_key>
 ```
 Run project:
 ```
-php -S 0.0.0.0:8001 -t public
+php -S 0.0.0.0:8002 -t public
 ```
 
 ## Tests
