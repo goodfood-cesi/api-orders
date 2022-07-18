@@ -23,9 +23,9 @@ class OrderFactory extends Factory {
         return [
             'user_id' => $this->faker->randomNumber(),
             'status' => $this->faker->randomFloat(0,1,5),
-            'paid' => $this->faker->boolean(),
+            'paid' => true,
             'paypal_id' => $this->faker->text(255),
-            'shop_id' => $this->faker->randomNumber(),
+            'restaurant_id' => $this->faker->randomNumber(),
         ];
     }
 }

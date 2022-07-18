@@ -17,7 +17,7 @@ class Order extends Model {
         'status',
         'paid',
         'paypal_id',
-        'shop_id'
+        'restaurant_id'
     ];
 
     public function menus(): HasMany {
